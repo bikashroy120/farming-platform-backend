@@ -1,9 +1,16 @@
 import express from 'express';
+import { authMiddlewares } from '../../middlewares/auth';
+import { userController } from './users.controller';
 
-const router = express.Router();
+const route = express.Router();
 
-router.get('/user', (req, res) => {
-  res.send('Login route');
-});
+route.get('/', authMiddlewares.auth('ADMIN'), userController.getUsers);
+route.get('/:id', authMiddlewares.auth(), userController.getSingleUser);
+route.patch(
+  '/:id',
+  authMiddlewares.auth('ADMIN'),
+  userController.updateUserStatus,
+);
+route.delete('/:id', authMiddlewares.auth('ADMIN'), userController.deleteUser);
 
-export default router;
+export const userRouter = route;
