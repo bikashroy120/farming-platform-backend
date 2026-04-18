@@ -4,33 +4,7 @@
 
 **A scalable, production-ready backend for managing urban farms, organic markets, and plant communities.**
 
-[![Node.js](https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15+-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org)
-[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com)
-[![Socket.io](https://img.shields.io/badge/Socket.io-Realtime-010101?style=for-the-badge&logo=socket.io&logoColor=white)](https://socket.io)
-
 </div>
-
----
-
-## 📖 Table of Contents
-
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Environment Variables](#environment-variables)
-  - [Database Setup](#database-setup)
-  - [Running the App](#running-the-app)
-- [Docker Setup](#-docker-setup)
-- [API Overview](#-api-overview)
-- [Useful Commands](#-useful-commands)
-- [Contributing](#-contributing)
-- [License](#-license)
 
 ---
 
@@ -56,34 +30,9 @@
 - **ORM:** Prisma
 - **Real-time:** Socket.io
 - **Auth:** JWT (Access + Refresh Tokens)
-- **Containerization:** Docker & Docker Compose
 
 ---
 
-## 📁 Project Structure
-
-```
-urban-farming-backend/
-├── prisma/
-│   ├── schema.prisma       # Database schema
-│   └── migrations/         # Migration history
-├── src/
-│   ├── config/             # App configuration
-│   ├── controllers/        # Route handlers
-│   ├── middlewares/        # Auth, rate limiting, error handling
-│   ├── routes/             # API route definitions
-│   ├── services/           # Business logic
-│   ├── sockets/            # Socket.io event handlers
-│   ├── utils/              # Helper functions
-│   └── server.ts           # App entry point
-├── .env.example
-├── docker-compose.yml
-├── Dockerfile
-├── package.json
-└── tsconfig.json
-```
-
----
 
 ## 🚀 Getting Started
 
@@ -91,10 +40,9 @@ urban-farming-backend/
 
 Make sure you have the following installed:
 
-- [Node.js](https://nodejs.org) `v18+`
+- [Node.js](https://nodejs.org) `v22+`
 - [npm](https://www.npmjs.com) `v9+`
 - [PostgreSQL](https://www.postgresql.org) (or use Docker)
-- [Docker](https://www.docker.com) *(optional, for containerized setup)*
 
 ---
 
@@ -123,7 +71,7 @@ NODE_ENV="development"
 PORT=5000
 
 # Database
-DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/urban_farming_db"
+DATABASE_URL="your_database_url"
 
 # JWT Secrets
 ACCESS_TOKEN_SECRET=your_strong_access_secret_here
@@ -140,6 +88,10 @@ After setting the correct `DATABASE_URL` in your `.env` file, run the following 
 
 ```bash
 npx prisma migrate dev --name init
+```
+
+```bash
+npx prisma generate
 ```
 
 ---
@@ -172,44 +124,14 @@ Once running successfully, you should see:
 
 ---
 
-## 🐳 Docker Setup
-
-Run the entire environment (App + Database) with a single command using Docker:
-
-```bash
-docker-compose up --build
-```
-
-To stop all running services:
-
-```bash
-docker-compose down
-```
-
----
-
-## 📡 API Overview
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `/api/auth/register` | Register a new user |
-| `POST` | `/api/auth/login` | Login and receive tokens |
-| `GET` | `/api/farms` | Get a list of all farms |
-| `POST` | `/api/farms/:id/rent` | Rent a specific farm |
-| `GET` | `/api/marketplace` | Browse all marketplace listings |
-| `POST` | `/api/marketplace` | Create a new product listing |
-| `GET` | `/api/forum/posts` | Fetch all forum posts |
-| `GET` | `/api/plants/:id/track` | Track a plant in real-time |
-
-> For the full API reference, see the [Postman Collection](#).
-
----
-
 ## 🧰 Useful Commands
 
 ```bash
 # Regenerate Prisma Client after schema changes
 npx prisma generate
+
+# add seed data
+npx prisma db seed
 
 # Open Prisma Studio to visually browse the database
 npx prisma studio
@@ -233,15 +155,10 @@ Contributions, issues, and feature requests are welcome! Please open an issue fi
 4. Push to the branch: `git push origin feature/amazing-feature`
 5. Open a Pull Request
 
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ---
 
 <div align="center">
-  Made with ❤️ for Urban Farmers
+  Made with ❤️ for Bikash Chandra
 </div>
 
