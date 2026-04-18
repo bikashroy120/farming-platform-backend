@@ -33,25 +33,132 @@ enum OrderStatus {
 }
 
 model User {
-  id            String         @id @default(uuid())
-  name          String
-  email         String         @unique
-  password      String
-  role          Role
-  status        UserStatus     @default(ACTIVE)
-  vendorProfile VendorProfile?
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id             String          @id @default(uuid())
+  name           String
+  email          String          @unique
+  password       String
+  role           Role
+  status         UserStatus      @default(ACTIVE)
+  vendorProfile  VendorProfile?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  orders         Order[]
+  bookings       Booking[]
+  communityPosts CommunityPost[]
+  plants         Plant[]
 }
 
 model VendorProfile {
-  id                  String              @id @default(ulid())
+  id                  String               @id @default(ulid())
+  farmName            String
   farmLocation        String
   latitude            Float
   longitude           Float
+  certificationStatus CertificationStatus  @default(PENDING)
+  userId              String               @unique
+  user                User                 @relation(fields: [userId], references: [id])
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  produces            Produce[]
+  rentalSpaces        RentalSpace[]
+  sustainabilityCerts SustainabilityCert[]
+}
+
+model Produce {
+  id                  String              @id @default(uuid())
+  vendorId            String
+  name                String
+  description         String
+  price               Float
+  category            String
   certificationStatus CertificationStatus @default(PENDING)
-  userId              String              @unique
-  user                User                @relation(fields: [userId], references: [id])
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @updatedAt
+  availableQuantity   Int
+
+  vendor    VendorProfile @relation(fields: [vendorId], references: [id])
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  orders    Order[]
+}
+
+model RentalSpace {
+  id          String        @id @default(uuid())
+  vendorId    String
+  vendor      VendorProfile @relation(fields: [vendorId], references: [id])
+  location    String
+  latitude    Float
+  longitude   Float
+  size        String
+  price       Float
+  isAvailable Boolean       @default(true)
+  createdAt   DateTime      @default(now())
+  bookings    Booking[]
+}
+
+model Order {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  produceId String
+  produce   Produce  @relation(fields: [produceId], references: [id])
+  vendorId  String
+  status    String   @default("PENDING")
+  orderDate DateTime @default(now())
+}
+
+model Booking {
+  id            String   @id @default(uuid())
+  userId        String
+  rentalSpaceId String
+  startDate     DateTime
+  endDate       DateTime
+
+  user        User        @relation(fields: [userId], references: [id])
+  rentalSpace RentalSpace @relation(fields: [rentalSpaceId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model CommunityPost {
+  id          String   @id @default(uuid())
+  userId      String
+  postContent String
+  postDate    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model SustainabilityCert {
+  id                String   @id @default(uuid())
+  vendorId          String
+  certifyingAgency  String
+  certificationDate DateTime
+
+  vendor VendorProfile @relation(fields: [vendorId], references: [id])
+
+  createdAt DateTime @default(now())
+}
+
+model Plant {
+  id           String    @id @default(uuid())
+  userId       String
+  name         String
+  growthStage  String
+  healthStatus String
+  plantedAt    DateTime
+  harvestAt    DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt    DateTime      @default(now())
+  plantUpdates PlantUpdate[]
+}
+
+model PlantUpdate {
+  id        String   @id @default(uuid())
+  plantId   String
+  updateMsg String
+  health    String
+  createdAt DateTime @default(now())
+
+  plant Plant @relation(fields: [plantId], references: [id])
 }

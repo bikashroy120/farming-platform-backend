@@ -5,7 +5,6 @@ import { sendResponse } from '../../../shared/customResponse';
 import httpStatus from 'http-status';
 import pick from '../../../shared/pick';
 import { paginationFields } from '../../../constant/pagination';
-import ApiError from '../../../error/ApiError';
 
 const getUsers = catchAsync(async (req: Request, res: Response) => {
   // Extraction with consistent naming
