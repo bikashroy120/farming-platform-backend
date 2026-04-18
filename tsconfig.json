@@ -17,6 +17,6 @@
       "*": ["node_modules/*"]
     }
   },
-  "include": ["src/**/*.ts", "generated/prisma/client.ts"],
+  "include": ["src/**/*.ts", "generated/prisma/client.ts", "prisma"],
   "exclude": ["node_modules", "dist"]
 }
