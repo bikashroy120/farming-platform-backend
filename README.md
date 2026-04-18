@@ -29,13 +29,16 @@ A scalable **Urban Farming Platform Backend** built with:
 
 ```bash
 git clone https://github.com/your-username/urban-farming-backend.git
-cd urban-farming-backend
+cd urban-farming-backend 
 
-# STEP 2: Install Dependencies
+## STEP 2: Install Dependencies
+
+```bash
 npm install
 
-# STEP 3: Setup Environment Variables
+## STEP 3: Setup Environment Variables
 
+```bash
 NODE_ENV="development"
 PORT=5000
 DATABASE_URL="your database url"
