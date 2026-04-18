@@ -43,12 +43,15 @@ const loginUser = async (data: ILogin) => {
     where: { email: data.email },
     select: { id: true, password: true, email: true, role: true, name: true },
   });
+
   if (!user) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid email or password');
   }
 
   // Compare Password
-  const isPasswordMatched = await comparePassword(data.password, user.password);
+  const isPasswordMatched = await comparePassword(user.password, data.password);
+
+  console.log('======user======', isPasswordMatched);
 
   if (!isPasswordMatched) {
     throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid email or password');

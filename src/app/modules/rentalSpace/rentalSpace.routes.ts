@@ -29,4 +29,4 @@ router.delete(
   RentalSpaceController.deleteRentalSpace,
 );
 
-export const RentalSpaceRoutes = router;
+export const rentalSpaceRoutes = router;

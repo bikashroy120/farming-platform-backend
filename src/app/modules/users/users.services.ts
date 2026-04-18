@@ -31,9 +31,9 @@ const getUsers = async (
   // other filter
   if (Object.keys(filterData).length > 0) {
     andConditions.push({
-      AND: Object.keys(filterData).map(key => ({
+      AND: Object.entries(filterData).map(([key, value]) => ({
         [key]: {
-          equals: filterData,
+          equals: value,
         },
       })),
     });

@@ -26,4 +26,4 @@ router.patch(
 
 router.delete('/:id', authMiddlewares.auth(), ProduceController.deleteProduce);
 
-export const ProduceRoutes = router;
+export const produceRoutes = router;

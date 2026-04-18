@@ -14,4 +14,4 @@ router.post(
 );
 router.get('/', authMiddlewares.auth(), BookingController.getAllBookings);
 
-export const BookingRoutes = router;
+export const bookingRoutes = router;

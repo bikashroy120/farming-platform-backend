@@ -25,4 +25,4 @@ router.patch(
   CertificationController.verifyCertification,
 );
 
-export const CertificationRoutes = router;
+export const certificationRoutes = router;

@@ -1,8 +1,14 @@
 import app from './app';
-import { Server } from 'http';
+import http, { Server } from 'http';
 import config from './config';
+import { initializeSocket } from './lib/socket';
 
 let server: Server;
+
+const serverInstance = http.createServer(app);
+
+// Initialize socket
+initializeSocket(serverInstance);
 
 process.on('uncaughtException', error => {
   console.log(error);
@@ -26,9 +32,9 @@ process.on('SIGTERM', () => {
   }
 });
 
-async function databaseConnection() {
+async function startServer() {
   try {
-    server = app.listen(config.port, () => {
+    server = serverInstance.listen(config.port, () => {
       console.log(`Server is listening on port ${config.port}`);
     });
   } catch (error) {
@@ -36,4 +42,4 @@ async function databaseConnection() {
   }
 }
 
-databaseConnection();
+startServer();

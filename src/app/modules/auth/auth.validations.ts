@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { Role } from '../../../../generated/prisma/enums';
+import { registry } from '../../../lib/openapi';
 
 export const registerSchema = z.object({
   body: z.object({
@@ -16,3 +17,7 @@ export const loginSchema = z.object({
     password: z.string().min(4, 'Password must be at least 4 characters long'),
   }),
 });
+
+// Swagger Components
+registry.register('RegisterUser', registerSchema.shape.body);
+registry.register('LoginUser', loginSchema.shape.body);

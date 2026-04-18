@@ -22,4 +22,4 @@ router.patch(
 
 router.get('/:id', authMiddlewares.auth(), PlantController.getPlantDetails);
 
-export const PlantRoutes = router;
+export const plantRoutes = router;

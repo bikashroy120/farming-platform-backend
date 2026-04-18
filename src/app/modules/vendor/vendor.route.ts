@@ -17,4 +17,4 @@ route.delete(
   vendorController.deleteVendor,
 );
 
-export const userRouter = route;
+export const vendorRoute = route;

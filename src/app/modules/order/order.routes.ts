@@ -28,4 +28,4 @@ router.patch(
   OrderController.updateOrderStatus,
 );
 
-export const OrderRoutes = router;
+export const orderRoutes = router;

@@ -6,7 +6,9 @@ import rateLimit from 'express-rate-limit';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import quicker from './shared/quicker';
 import { sendResponse } from './shared/customResponse';
-import routes from './app/routes/index';
+import routes, { setupSwaggerDocs } from './app/routes/index';
+import swaggerUi from 'swagger-ui-express';
+import { generateOpenApiDocs } from './lib/openapi';
 
 const app: Application = express();
 
@@ -29,6 +31,9 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1', routes);
+
+setupSwaggerDocs();
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(generateOpenApiDocs()));
 
 app.get('/health', async (req, res) => {
   const healthData = {
