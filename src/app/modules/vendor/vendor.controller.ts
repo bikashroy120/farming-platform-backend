@@ -8,7 +8,8 @@ import { paginationFields } from '../../../constant/pagination';
 
 const createVendor = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
-  const result = await vendorServices.createVendor(data);
+  const userId = req.user?.id as string;
+  const result = await vendorServices.createVendor(data, userId);
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,

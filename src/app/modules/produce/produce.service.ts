@@ -9,7 +9,7 @@ import { calculatePagination } from '../../helpers/paginationHelper';
  */
 const createProduce = async (data: Produce): Promise<Produce> => {
   const result = await prisma.produce.create({
-    data,
+    data: { ...data },
     include: { vendor: true },
   });
   return result;

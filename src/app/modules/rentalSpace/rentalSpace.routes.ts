@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  authMiddlewares.auth(),
+  authMiddlewares.auth('VENDOR'),
   validateRequest(RentalSpaceValidation.createRentalSpaceZodSchema),
   RentalSpaceController.createRentalSpace,
 );

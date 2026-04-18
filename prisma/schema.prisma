@@ -46,6 +46,9 @@ model User {
   bookings       Booking[]
   communityPosts CommunityPost[]
   plants         Plant[]
+
+  @@index([role])
+  @@index([status])
 }
 
 model VendorProfile {
@@ -62,6 +65,8 @@ model VendorProfile {
   produces            Produce[]
   rentalSpaces        RentalSpace[]
   sustainabilityCerts SustainabilityCert[]
+
+  @@index([latitude, longitude])
 }
 
 model Produce {
@@ -78,6 +83,10 @@ model Produce {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   orders    Order[]
+
+  @@index([vendorId])
+  @@index([category])
+  @@index([certificationStatus])
 }
 
 model RentalSpace {
@@ -92,6 +101,9 @@ model RentalSpace {
   isAvailable Boolean       @default(true)
   createdAt   DateTime      @default(now())
   bookings    Booking[]
+
+  @@index([vendorId])
+  @@index([latitude, longitude])
 }
 
 model Order {
@@ -103,6 +115,11 @@ model Order {
   vendorId  String
   status    String   @default("PENDING")
   orderDate DateTime @default(now())
+
+  @@index([userId])
+  @@index([vendorId])
+  @@index([produceId])
+  @@index([status])
 }
 
 model Booking {
@@ -116,6 +133,9 @@ model Booking {
   rentalSpace RentalSpace @relation(fields: [rentalSpaceId], references: [id])
 
   createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([rentalSpaceId])
 }
 
 model CommunityPost {
@@ -125,6 +145,8 @@ model CommunityPost {
   postDate    DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }
 
 model SustainabilityCert {
@@ -136,6 +158,8 @@ model SustainabilityCert {
   vendor VendorProfile @relation(fields: [vendorId], references: [id])
 
   createdAt DateTime @default(now())
+
+  @@index([vendorId])
 }
 
 model Plant {
@@ -152,6 +176,8 @@ model Plant {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   plantUpdates PlantUpdate[]
+
+  @@index([userId])
 }
 
 model PlantUpdate {

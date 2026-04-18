@@ -4,6 +4,10 @@ import { IGenericErrorMessage } from '../../interfaces/errorInterface';
 import { ZodError } from 'zod';
 import handleZodValidationError from '../../error/handleZodValidationError';
 import ApiError from '../../error/ApiError';
+import { Prisma } from '../../../generated/prisma/client';
+import handlePrismaClientKnownRequestError from '../../error/handlePrismaClientKnownRequestError';
+import handlePrismaValidationError from '../../error/handlePrismaValidationError';
+import { TokenExpiredError } from 'jsonwebtoken';
 
 const globalErrorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   if (config.node_env === 'development') {
@@ -18,6 +22,33 @@ const globalErrorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   if (error instanceof ZodError) {
     const simplifiedError = handleZodValidationError(error);
 
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorMessages = simplifiedError.errorMessages;
+  } else if (error instanceof TokenExpiredError) {
+    statusCode = 401;
+    message = 'Unauthorized! Your token has expired. Please login again.';
+    errorMessages = [
+      {
+        path: '',
+        message: error.message,
+      },
+    ];
+  }
+  // যদি টোকেন ভুল বা ইনভ্যালিড হয়
+  else if (error.name === 'JsonWebTokenError') {
+    statusCode = 401;
+    message = 'Invalid Token!';
+    errorMessages = [
+      { path: '', message: 'The token you provided is not valid.' },
+    ];
+  } else if (error instanceof Prisma.PrismaClientValidationError) {
+    const simplifiedError = handlePrismaValidationError(error);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorMessages = simplifiedError.errorMessages;
+  } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    const simplifiedError = handlePrismaClientKnownRequestError(error);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;

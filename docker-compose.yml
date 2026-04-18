@@ -14,20 +14,5 @@ services:
     volumes:
       - postgres_data_platform:/var/lib/postgresql/data
 
-  # api:
-  #   build: .
-  #   container_name: platform-api
-  #   restart: always
-  #   ports:
-  #     - '5000:5000'
-  #   environment:
-  #     NODE_ENV: 'development'
-  #     PORT: 5000
-  #     DATABASE_URL: 'postgresql://postgres:postgres123@postgres:5432/platform_db'
-  #     ACCESS_TOKEN_SECRET: 'access123'
-  #     REFRESH_TOKEN_SECRET: 'refresh123'
-  #   depends_on:
-  #     - postgres
-
 volumes:
   postgres_data_platform:

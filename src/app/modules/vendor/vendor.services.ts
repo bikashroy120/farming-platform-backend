@@ -2,7 +2,6 @@ import httpStatus from 'http-status';
 import {
   Prisma,
   User,
-  UserStatus,
   VendorProfile,
 } from '../../../../generated/prisma/client';
 import ApiError from '../../../error/ApiError';
@@ -13,10 +12,13 @@ import { calculatePagination } from '../../helpers/paginationHelper';
 import { IVendorFilter } from './vendor.interface';
 import { getBoundingBox } from '../../helpers/boundingBox';
 
-const createVendor = async (data: VendorProfile): Promise<VendorProfile> => {
+const createVendor = async (
+  data: VendorProfile,
+  userId: string,
+): Promise<VendorProfile> => {
   // Check if vendor already exists for this user
   const existingVendor = await prisma.vendorProfile.findUnique({
-    where: { userId: data.userId },
+    where: { userId: userId },
   });
 
   if (existingVendor) {
@@ -33,7 +35,7 @@ const createVendor = async (data: VendorProfile): Promise<VendorProfile> => {
       farmLocation: data.farmLocation,
       latitude: data.latitude,
       longitude: data.longitude,
-      userId: data.userId,
+      userId: userId,
     },
   });
 

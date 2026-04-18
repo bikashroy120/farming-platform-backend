@@ -2,13 +2,13 @@ import express, { Application, NextFunction, Response, Request } from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
-import rateLimit from 'express-rate-limit';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import quicker from './shared/quicker';
 import { sendResponse } from './shared/customResponse';
 import routes, { setupSwaggerDocs } from './app/routes/index';
 import swaggerUi from 'swagger-ui-express';
 import { generateOpenApiDocs } from './lib/openapi';
+import { globalLimiter } from '../src/app/middlewares/rateLimit';
 
 const app: Application = express();
 
@@ -17,14 +17,7 @@ app.use(cors());
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Too many requests, please try again later.',
-});
-
-app.use('/api', limiter);
+app.use(globalLimiter);
 
 app.get('/', (req, res) => {
   res.send('Your server is production ready!');

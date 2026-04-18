@@ -23,6 +23,40 @@ export const VendorModelSchema = registry.register(
 
 export const vendorSwagger = () => {
   registry.registerPath({
+    method: 'post',
+    path: '/vendors/create',
+    summary: 'Create a new vendor profile',
+    tags: ['Vendors'],
+    security: [{ bearerAuth: [] }],
+    request: {
+      body: {
+        content: {
+          'application/json': {
+            schema: z.object({
+              farmName: z.string().openapi({ example: 'Green Valley Farm' }),
+              farmLocation: z
+                .string()
+                .openapi({ example: 'Dhaka, Bangladesh' }),
+              latitude: z.number().openapi({ example: 23.8103 }),
+              longitude: z.number().openapi({ example: 90.4125 }),
+            }),
+          },
+        },
+      },
+    },
+    responses: {
+      201: {
+        description: 'Vendor created successfully',
+        content: {
+          'application/json': {
+            schema: createSuccessResponse(VendorModelSchema),
+          },
+        },
+      },
+    },
+  });
+
+  registry.registerPath({
     method: 'get',
     path: '/vendors/vendor/all',
     summary: 'Get all vendors with pagination (Admin Only)',

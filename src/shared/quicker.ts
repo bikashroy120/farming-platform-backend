@@ -11,7 +11,7 @@ const getSystemHealth = () => {
 
 const getApplicationHealth = () => {
   return {
-    environment: config.env,
+    environment: config.node_env,
     uptime: `${process.uptime().toFixed(2)} Second`,
     memoryUsage: {
       heapTotal: `${(process.memoryUsage().heapTotal / 1024 / 1024).toFixed(2)} MB`,

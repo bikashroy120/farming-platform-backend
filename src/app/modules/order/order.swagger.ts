@@ -46,6 +46,7 @@ export const orderSwagger = () => {
             schema: z.object({
               produceId: z.string(),
               vendorId: z.string(),
+              quantity: z.number(),
             }),
           },
         },

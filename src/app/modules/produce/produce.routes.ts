@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  authMiddlewares.auth(),
+  authMiddlewares.auth('VENDOR'),
   validateRequest(ProduceValidation.createProduceZodSchema),
   ProduceController.createProduce,
 );

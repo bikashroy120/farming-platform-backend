@@ -4,6 +4,11 @@ import { vendorController } from './vendor.controller';
 
 const route = express.Router();
 
+route.post(
+  '/create',
+  authMiddlewares.auth('VENDOR'),
+  vendorController.createVendor,
+);
 route.get(
   '/vendor/all',
   authMiddlewares.auth('ADMIN'),

@@ -36,10 +36,9 @@ export const rentalSpaceSwagger = () => {
         content: {
           'application/json': {
             schema: z.object({
-              title: z.string(),
-              description: z.string(),
               price: z.number(),
               size: z.string(),
+              location: z.string(),
               latitude: z.number(),
               longitude: z.number(),
               vendorId: z.string(),

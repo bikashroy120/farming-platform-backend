@@ -10,6 +10,7 @@ export type IGenericResponse<T> = {
 };
 
 export type IGenericErrorResponse = {
+  success: boolean;
   statusCode: number;
   message: string;
   errorMessages: IGenericErrorMessage[];
