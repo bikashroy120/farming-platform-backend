@@ -1,4 +1,4 @@
-# 🌱 Urban Farming Backend API
+# Farming Backend API
 
 A scalable **Urban Farming Platform Backend** built with:
 
@@ -11,7 +11,7 @@ A scalable **Urban Farming Platform Backend** built with:
 
 ---
 
-# 🚀 Features
+# Features
 
 - 🔐 Authentication (JWT + Role-based access)
 - 🌾 Farm rental system (location-based)
@@ -23,10 +23,22 @@ A scalable **Urban Farming Platform Backend** built with:
 
 ---
 
-# 📁 Project Setup
+#  Project Setup
 
-## 📌 1. Clone Project
+##  1. Clone Project
 
 ```bash
 git clone https://github.com/your-username/urban-farming-backend.git
 cd urban-farming-backend
+
+# STEP 2: Install Dependencies
+npm install
+
+# STEP 3: Setup Environment Variables
+
+NODE_ENV="development"
+PORT=5000
+DATABASE_URL="your database url"
+ACCESS_TOKEN_SECRET = 'access123'
+REFRESH_TOKEN_SECRET = 'refresh123'
+
