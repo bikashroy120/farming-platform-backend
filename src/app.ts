@@ -9,6 +9,7 @@ import routes, { setupSwaggerDocs } from './app/routes/index';
 import swaggerUi from 'swagger-ui-express';
 import { generateOpenApiDocs } from './lib/openapi';
 import { globalLimiter } from '../src/app/middlewares/rateLimit';
+import cookies from 'cookie-parser';
 
 const app: Application = express();
 
@@ -17,6 +18,7 @@ app.use(cors());
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookies());
 app.use(globalLimiter);
 
 app.get('/', (req, res) => {

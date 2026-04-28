@@ -19,7 +19,7 @@ route.post(
   authController.loginUser,
 );
 route.post('/logout', authController.logoutUser);
-route.get('/access-token', authController.getAccessToken);
+route.post('/access-token', authController.getAccessToken);
 // route.get('/get-me',  authController.);
 
 export const authRouter = route;

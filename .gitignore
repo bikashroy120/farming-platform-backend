@@ -5,3 +5,4 @@ yarn.lock
 package-lock.json
 /generated/prisma
 /dist
+config.bat

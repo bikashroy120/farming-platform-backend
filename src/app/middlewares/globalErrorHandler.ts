@@ -34,9 +34,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
         message: error.message,
       },
     ];
-  }
-  // যদি টোকেন ভুল বা ইনভ্যালিড হয়
-  else if (error.name === 'JsonWebTokenError') {
+  } else if (error.name === 'JsonWebTokenError') {
     statusCode = 401;
     message = 'Invalid Token!';
     errorMessages = [

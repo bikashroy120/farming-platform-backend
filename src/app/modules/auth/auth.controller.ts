@@ -48,6 +48,8 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
 
 const getAccessToken = catchAsync(async (req: Request, res: Response) => {
   // get refresh token
+
+  console.log(req.cookies);
   const { refreshToken: oldRefreshToken } = req.cookies;
 
   const result = await authServices.getAccessToken(oldRefreshToken);
