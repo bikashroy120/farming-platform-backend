@@ -13,6 +13,35 @@ services:
       - '5432:5432'
     volumes:
       - postgres_data_platform:/var/lib/postgresql/data
+    networks:
+      - platform-network
+
+  # --- Redis Service Added ---
+  redis:
+    image: redis:7-alpine
+    container_name: platform-redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data_platform:/data
+    networks:
+      - platform-network
+
+  # --- Email Testing Service (Mailpit) ---
+  mailpit:
+    image: axllent/mailpit
+    container_name: platform-mailer
+    restart: always
+    ports:
+      - '1025:1025'
+      - '8025:8025'
+    networks:
+      - platform-network
 
 volumes:
   postgres_data_platform:
+  redis_data_platform: 
+
+networks:
+  platform-network:

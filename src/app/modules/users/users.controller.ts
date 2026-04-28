@@ -5,18 +5,41 @@ import { sendResponse } from '../../../shared/customResponse';
 import httpStatus from 'http-status';
 import pick from '../../../shared/pick';
 import { paginationFields } from '../../../constant/pagination';
+import { getKey } from '../../helpers/key';
+import redisClient from '../../../lib/redis';
 
 const getUsers = catchAsync(async (req: Request, res: Response) => {
   // Extraction with consistent naming
   const filters = pick(req.query, ['searchTerm', 'role', 'status']);
   const options = pick(req.query, paginationFields);
+
+  const key = `users:${getKey(req.query)}`;
+
+  const getCash = await redisClient.get(key);
+
+  if (getCash) {
+    console.log('Cache hit for key:========');
+    const data = JSON.parse(getCash);
+    return sendResponse(res, {
+      success: true,
+      statusCode: httpStatus.OK,
+      message: 'Users retrieved successfully (from cache)',
+      meta: data.meta,
+      data: data.data,
+    });
+  }
+
+  console.log('Cache miss for key:========');
   const result = await userServices.getUsers(filters, options);
+
+  await redisClient.setex(key, 3600, JSON.stringify(result));
 
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
     message: 'Users retrieved successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 
